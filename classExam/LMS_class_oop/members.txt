@@ -1,0 +1,4 @@
+kkw|1234|김기원|user|True
+ksh|1102|김소현|admin|True
+kmh|0114|김민혁|user|True
+syk|1111|심유경|manager|True

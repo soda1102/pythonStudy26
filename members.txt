@@ -1,0 +1,3 @@
+ksh|2222|김소현|admin|True
+nsl|1234|노소림|user|True
+agw|1234|안건우|manager|True

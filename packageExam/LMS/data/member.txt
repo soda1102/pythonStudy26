@@ -1,0 +1,5 @@
+kkw|1234|김기원|01011112222|admin|True
+lhj|1111|임효정|01023456789|manager|True
+ljj|8888|이재정|01022223333|user|True
+ksh|1102|김소현|01033334444|user|True
+kmh|김민혁|0114|01044445555|user|True

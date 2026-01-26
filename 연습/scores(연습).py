@@ -1,0 +1,199 @@
+# 성적 처리용 프로그램을 개발해보자.
+
+# CREATE : 성적입력
+# READ : 성적보기
+# UPDATE : 성적수정
+# DELETE : 성적삭제
+
+# 회원가입과 연동하여 성적처리용 프로그램 개발하기(숙제)
+
+# 필요한 변수는?
+sns = [] #학번
+names = [] #이름
+kors = [] # 국어점수 (계산할거라 ""는 붙이지 않음.)
+engs = [] # 영어점수
+mats = [] # 수학점수
+tots = [] # 빈 배열 (총점)
+avgs = [] # 빈 배열 (평균)
+grades = [] # 빈 배열 (학점)
+
+menu = """
+====================
+엠비씨 아카데미 성적처리
+====================
+
+1. 성적입력
+2. 성적보기
+3. 성적수정
+4. 성적삭제
+5. 프로그램 종료
+
+"""
+
+run = True # 프로그램 실행중
+login_user = None
+
+while run: # un 변수가 False 처리 될때까지 반복한다.
+    # : 아래는 항상 들여쓰기(4칸) 정도로 처리한다.
+    # 들여쓰기를 진행하면 하위 실행문임. (윗문장 아래에서 이어서 실행하게끔)
+    print(menu) # 콘솔창에 메뉴를 출력
+    select = input("(1~5)값 입력 : ") # select 변수에 숫자를 넣는다.
+    #               키보드로 입력받는 곳 앞쪽에 출력 메세지
+
+    if select == "1" : # 키보드로 입력한 숫자가 1이면?
+        print("학생 성적을 입력합니다.") # 1일때 처리되는 부분
+
+        sn = input("학번을 입력하세요 : ")
+        name = input("이름을 입력하세요 : ")
+        kor = int(input("국어점수 : "))
+        eng = int(input("영어점수 : "))
+        mat = int(input("수학점수 : ")) # 키보드를 이용한 점수 입력
+        #     키보드로 입력한 숫자는 문자로 인식됨으로 int()로 감싸 계산용으로 변경
+
+        tot = kor + eng + mat
+        avg = tot / 3
+
+        print("입력한 정보를 확인합니다.")
+        #print("학번 : " + sn)
+        #print("이름 : " + name)
+        #print("국어 : " + kor)
+        #print("영어 : " + eng)
+        #print("수학 : " + mat) # 키보드로 입력한 점수 확인용
+        #print에서 문자와 숫자가 같이 출력되려면 str()으로 숫자를 문자로 변경해야한다.
+        #그러나 f 포멧팅은 중괄호 {} 안에 변수가 숫자든 문자든 상관없이 출력해준다.
+        print(f"학번 : {sn}, 이름 : {name}, 국어 : {kor}, 영어 : {eng}, 수학 : {mat}, 총점 : {tot}, 평균 : {avg} ")
+        # print("학번 : " + sn) 할경우 이 함수를 다시 문자열로 변경해줘야 하는 번거로움이 있음.
+        # 따라서 print(f") 함수를 쓰면 알아서 문자, 숫자열 처리 해주기 때문에 쓰는게 좋음.
+
+        if input("저장하려면 y : " ) == "y" : # 저장시 y 입력
+            sns.append(sn)
+            names.append(name)
+            kors.append(kor)
+            engs.append(eng)
+            mats.append(mat) # 변수뒤에 s는 배열(리스트)라고 생각.
+                             # 변수.append() 리스트 뒤에 값 추가.
+            tot = kor + eng + mat
+            tots.append(tot) # 입력 후 저장시 총점 계산하여 넣음
+            avgs.append(tot / 3) # 입력 후 저장 시 평균 계산하여 넣음
+            # 미션 90점 이상이면 A, 80점 이상이면 B, 70점 이상이면 C, 나머지 F
+
+            print("저장 완료")
+        else:
+            print("저장되지 않았습니다.")
+            print("처음부터 다시 입력하세요.")
+
+    elif select == "2" :  # 키보드로 입력한 숫자가 2이면?
+        print("학생들의 성적을 출력합니다.") # 2일때 처리되는 부분
+        print("=================================")
+        print("[성적목록]")
+
+        for i in range(len(sns)): # 리스트(배열)의 처음부터 끝까지 반복용
+            #          len(sns) -> sns 리스트의 길이를 가져옴(기본값:5)
+            #    range(5) -> 0 ~ 5까지 증가
+            # i in 5 -> i값에 0 반복 1 반복 2 반복 3 반복 4 반복 5 끝
+            # 결론 : i값이 인덱스로 사용함.
+
+            # tots[i] = kors[i] + engs[i] + mats[i]
+            # avgs[i] = tots[i] / 3
+            # 오류 발생으로 주석처리 -> 이유는? index out of range
+            # 비어있는 리스트는 주소가 없다.
+            # 해결방법 : .append()를 사용한다.
+
+            tots.append(kors[i] + engs[i] + mats[i])
+            avgs.append(tots[i] / 3)
+
+            print("-----------------------------------------------------------")
+            print("학번 : " + sns[i] + "이름 : " + names[i])
+            print("국어 : " + str(kors[i]) + "영어 : " + str(engs[i]) + "수학 : " + str(mats[i]))
+            print("총점 : " + str(tots[i]) + "평균 : " + str(avgs[i]))
+            print("-----------------------------------------------------------")
+
+            # grades[i] = avgs[i] # 90점 넘으면 a, 80점 넘으면 b, 70점 넘으면 c, 60점이하 f 로 해보기
+
+            grades = ""
+
+            if avg >= 90:
+                grade = "A"  # 90점 이상이면 A
+
+            elif avg >= 80:
+                grade = "B"  # 80점 이상이면 B
+
+            elif avg >= 70:
+                grade = "C"  # 70점 이상이면 C
+
+            else:
+                grade = "F"
+
+            print("귀하의 등급은 " + grade + "입니다.")
+
+
+    elif select == "3" : # 키보드로 입력한 숫자가 3이면?
+        print("학생 성적을 수정합니다.") # 3일때 처리되는 부분
+        # 1. 등록된 학생의 점수를 가져온다.
+        # 학번을 이용하여 학생을 찾는다.
+        sn = input("수정할 학번 : ")
+        if sn in sns : #학번이 들어있는 리스트 in 안에 있는지 확인
+            print("학번이 있습니다.")
+            idx = sns.index(sn) #찾은 학번의 주소를 가져옴
+            print(f"이름 : {names[idx]}, 국어 : {kors[idx]}, 영어 : {engs[idx]}, 수학 : {mats[idx]}")
+
+            # 2. 등록된 학생의 점수를 수정한다.
+            # 3. 수정된 값을 기준으로 총점과 평균과 등급을 다시 등록한다. (미션)
+
+            print("점수 수정")
+            print("1. 국어 점수 수정")
+            print("2. 영어 점수 수정")
+            print("3. 수학 점수 수정")
+
+            choice = input("선택 : ")
+
+            if choice == "1" :
+                kors[idx] = input("새 국어 점수 : ")
+                print("국어 점수 변경 완료 " + kors[idx])
+
+            elif choice == "2" :
+               engs[idx] = input("새 영어 점수 : ")
+               print("영어 점수 변경 완료 " + engs[idx])
+
+            elif choice == "3" :
+               mats[idx] = input("새 수학 점수 : ")
+               print("수학 점수 변경 완료 " + mats[idx])
+            else :
+                print("점수 변경 취소")
+
+        else:
+            print("학번이 없습니다.")
+            print("처음으로 돌아갑니다.")
+
+
+    elif select == "4" : # 키보드로 입력한 숫자가 4이면?
+        print("학생 성적을 삭제합니다.") # 4일때 처리되는 부분
+        sn = input("삭제할 학번 : ")
+
+        if sn in sns:
+            idx = sns.index(sn)
+            print(f"{names[idx]} 학생의 정보를 삭제합니다.")
+
+            if input("정말 삭제할까요? (y) : ") == "y":
+                sns.pop(idx)
+                names.pop(idx)
+                kors.pop(idx)
+                engs.pop(idx)
+                mats.pop(idx)
+                print("삭제 완료!")
+            else :
+                print("삭제가 취소되었습니다.")
+        else:
+            print("학생 정보가 없습니다.")
+            print("처음으로 돌아갑니다.")
+
+
+    elif select == "5" : # 키보드로 입력한 숫자가 5이면?
+        print("프로그램을 종료합니다.") # 5일때 처리되는 부분
+        run = False # while문을 종료하여 프로그램이 꺼진다.
+
+    else : # 1~5까지 값 이외의 문자가 들어오면 처리용
+        print("1~5값만 허용합니다.")
+
+
+

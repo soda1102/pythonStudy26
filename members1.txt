@@ -1,0 +1,1 @@
+ksh|1234|김소현|admin|True
